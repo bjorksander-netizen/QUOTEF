@@ -1,98 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="24dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mode notifikasi"
-            android:textStyle="bold"
-            android:textSize="16sp" />
-
-        <RadioGroup
-            android:id="@+id/mode_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <RadioButton
-                android:id="@+id/mode_lockscreen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Lockscreen — quote tampil penuh di layar kunci" />
-
-            <RadioButton
-                android:id="@+id/mode_normal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Biasa — isi disembunyikan di layar kunci" />
-
-            <RadioButton
-                android:id="@+id/mode_silent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Senyap — tanpa suara &amp; getar" />
-
-            <RadioButton
-                android:id="@+id/mode_off"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mati — hanya widget, tanpa notifikasi" />
-        </RadioGroup>
+            android:text="Quote Filosofis"
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Frekuensi"
-            android:textStyle="bold"
-            android:textSize="16sp" />
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="20dp"
+            android:text="Kebijaksanaan kecil, setiap hari."
+            android:textSize="14sp"
+            android:alpha="0.6" />
 
-        <Spinner
-            android:id="@+id/interval_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Aliran filosofi"
-            android:textStyle="bold"
-            android:textSize="16sp" />
-
-        <LinearLayout
-            android:id="@+id/schools_container"
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp"
+            app:cardBackgroundColor="?attr/colorSurfaceContainerHigh">
 
-        <Button
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Notifikasi"
+                    android:textStyle="bold"
+                    android:textSize="15sp" />
+
+                <RadioGroup
+                    android:id="@+id/mode_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp">
+
+                    <RadioButton
+                        android:id="@+id/mode_lockscreen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minHeight="44dp"
+                        android:text="Lockscreen — tampil penuh di layar kunci" />
+
+                    <RadioButton
+                        android:id="@+id/mode_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minHeight="44dp"
+                        android:text="Biasa — isi disembunyikan di layar kunci" />
+
+                    <RadioButton
+                        android:id="@+id/mode_silent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minHeight="44dp"
+                        android:text="Senyap — tanpa suara &amp; getar" />
+
+                    <RadioButton
+                        android:id="@+id/mode_off"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minHeight="44dp"
+                        android:text="Mati — hanya widget" />
+                </RadioGroup>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Frekuensi"
+                    android:textStyle="bold"
+                    android:textSize="15sp" />
+
+                <Spinner
+                    android:id="@+id/interval_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp"
+            app:cardBackgroundColor="?attr/colorSurfaceContainerHigh">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Widget"
+                    android:textStyle="bold"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/alpha_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Transparansi latar: 75%"
+                    android:textSize="14sp"
+                    android:alpha="0.7" />
+
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/alpha_slider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:valueFrom="0"
+                    android:valueTo="4"
+                    android:stepSize="1"
+                    android:value="1" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp"
+            app:cardBackgroundColor="?attr/colorSurfaceContainerHigh">
+
+            <LinearLayout
+                android:id="@+id/schools_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Aliran filosofi"
+                    android:textStyle="bold"
+                    android:textSize="15sp" />
+
+                <LinearLayout
+                    android:id="@+id/schools_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:orientation="vertical" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_save"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="22dp"
+            app:cornerRadius="28dp"
             android:text="Simpan pengaturan" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_now"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="10dp"
+            app:cornerRadius="28dp"
             android:text="Tampilkan quote sekarang" />
 
         <TextView
             android:id="@+id/preview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textSize="16sp"
-            android:textStyle="italic" />
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="12dp"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            android:alpha="0.85" />
     </LinearLayout>
 </ScrollView>
