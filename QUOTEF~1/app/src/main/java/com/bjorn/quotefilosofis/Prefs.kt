@@ -6,10 +6,10 @@ import android.content.SharedPreferences
 object Prefs {
     private const val NAME = "quote_prefs"
 
-    const val MODE_NORMAL = "normal"        // notifikasi biasa
-    const val MODE_LOCKSCREEN = "lockscreen" // tampil penuh di lockscreen
-    const val MODE_SILENT = "silent"        // tanpa suara/getar
-    const val MODE_OFF = "off"              // hanya widget, tanpa notifikasi
+    const val MODE_NORMAL = "normal"
+    const val MODE_LOCKSCREEN = "lockscreen"
+    const val MODE_SILENT = "silent"
+    const val MODE_OFF = "off"
 
     private fun sp(c: Context): SharedPreferences =
         c.getSharedPreferences(NAME, Context.MODE_PRIVATE)
@@ -24,4 +24,9 @@ object Prefs {
         sp(c).getStringSet("schools", Quotes.SCHOOLS.toSet())!!.toSet()
     fun setSchools(c: Context, v: Set<String>) =
         sp(c).edit().putStringSet("schools", v).apply()
+
+    // 0 = pekat (100%), 4 = transparan penuh (0%)
+    fun getWidgetAlphaLevel(c: Context): Int = sp(c).getInt("widget_alpha", 1)
+    fun setWidgetAlphaLevel(c: Context, v: Int) =
+        sp(c).edit().putInt("widget_alpha", v.coerceIn(0, 4)).apply()
 }

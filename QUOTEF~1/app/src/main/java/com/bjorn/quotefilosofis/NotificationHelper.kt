@@ -56,6 +56,7 @@ object NotificationHelper {
             .setStyle(NotificationCompat.BigTextStyle().bigText("“${quote.text}”\n— ${quote.author}"))
             .setContentIntent(pi)
             .setAutoCancel(true)
+            .setColor(0xFF4DB6AC.toInt())
             .setVisibility(
                 if (mode == Prefs.MODE_NORMAL) NotificationCompat.VISIBILITY_PRIVATE
                 else NotificationCompat.VISIBILITY_PUBLIC

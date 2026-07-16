@@ -25,6 +25,11 @@ class QuoteWidgetProvider : AppWidgetProvider() {
     companion object {
         const val ACTION_REFRESH = "com.bjorn.quotefilosofis.REFRESH_WIDGET"
 
+        private val BACKGROUNDS = intArrayOf(
+            R.drawable.widget_bg_0, R.drawable.widget_bg_1, R.drawable.widget_bg_2,
+            R.drawable.widget_bg_3, R.drawable.widget_bg_4
+        )
+
         fun updateAll(context: Context, quote: Quote) {
             val manager = AppWidgetManager.getInstance(context)
             val ids = manager.getAppWidgetIds(
@@ -36,9 +41,11 @@ class QuoteWidgetProvider : AppWidgetProvider() {
         private fun update(context: Context, manager: AppWidgetManager, id: Int, quote: Quote) {
             val views = RemoteViews(context.packageName, R.layout.widget_quote)
             views.setTextViewText(R.id.widget_quote, "“${quote.text}”")
-            views.setTextViewText(R.id.widget_author, "— ${quote.author} (${quote.school})")
+            views.setTextViewText(R.id.widget_author, "— ${quote.author} · ${quote.school}")
 
-            // Ketuk widget = quote baru
+            val level = Prefs.getWidgetAlphaLevel(context).coerceIn(0, 4)
+            views.setInt(R.id.widget_root, "setBackgroundResource", BACKGROUNDS[level])
+
             val refresh = Intent(context, QuoteWidgetProvider::class.java).setAction(ACTION_REFRESH)
             val pi = PendingIntent.getBroadcast(
                 context, 0, refresh,

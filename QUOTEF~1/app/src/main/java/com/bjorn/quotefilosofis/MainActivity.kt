@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.google.android.material.slider.Slider
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,6 +30,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+    private val alphaLabels =
+        listOf("100% (pekat)", "75%", "50%", "25%", "0% (transparan)")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -40,6 +44,8 @@ class MainActivity : AppCompatActivity() {
         val intervalSpinner = findViewById<Spinner>(R.id.interval_spinner)
         val schoolsContainer = findViewById<LinearLayout>(R.id.schools_container)
         val preview = findViewById<TextView>(R.id.preview)
+        val alphaSlider = findViewById<Slider>(R.id.alpha_slider)
+        val alphaLabel = findViewById<TextView>(R.id.alpha_label)
 
         // --- Mode notifikasi ---
         when (Prefs.getMode(this)) {
@@ -62,11 +68,20 @@ class MainActivity : AppCompatActivity() {
             intervals.indexOf(Prefs.getIntervalMinutes(this)).coerceAtLeast(0)
         )
 
+        // --- Transparansi widget ---
+        val level = Prefs.getWidgetAlphaLevel(this)
+        alphaSlider.value = level.toFloat()
+        alphaLabel.text = "Transparansi latar: ${alphaLabels[level]}"
+        alphaSlider.addOnChangeListener { _, value, _ ->
+            alphaLabel.text = "Transparansi latar: ${alphaLabels[value.toInt().coerceIn(0, 4)]}"
+        }
+
         // --- Aliran filosofi ---
         val saved = Prefs.getSchools(this)
         val checkboxes = Quotes.SCHOOLS.map { school ->
             CheckBox(this).apply {
                 text = school
+                minHeight = (44 * resources.displayMetrics.density).toInt()
                 isChecked = school in saved
                 schoolsContainer.addView(this)
             }
@@ -82,12 +97,14 @@ class MainActivity : AppCompatActivity() {
             }
             Prefs.setMode(this, mode)
             Prefs.setIntervalMinutes(this, intervals[intervalSpinner.selectedItemPosition])
+            Prefs.setWidgetAlphaLevel(this, alphaSlider.value.toInt())
 
             val selected = checkboxes.filter { it.isChecked }.map { it.text.toString() }.toSet()
             Prefs.setSchools(this, if (selected.isEmpty()) Quotes.SCHOOLS.toSet() else selected)
 
             QuoteWorker.schedule(this)
-            Toast.makeText(this, "Tersimpan. Quote akan datang sesuai jadwal.", Toast.LENGTH_SHORT).show()
+            QuoteWidgetProvider.updateAll(this, Quotes.random(Prefs.getSchools(this)))
+            Toast.makeText(this, "Tersimpan.", Toast.LENGTH_SHORT).show()
         }
 
         // --- Quote sekarang ---
@@ -98,7 +115,6 @@ class MainActivity : AppCompatActivity() {
             QuoteWidgetProvider.updateAll(this, q)
         }
 
-        // Jadwalkan saat pertama dibuka
         QuoteWorker.schedule(this)
     }
 
