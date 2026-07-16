@@ -1,58 +1,55 @@
 package com.bjorn.quotefilosofis
 
-import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
-import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
 import android.widget.RemoteViews
 
 class QuoteWidgetProvider : AppWidgetProvider() {
 
-    override fun onUpdate(context: Context, manager: AppWidgetManager, ids: IntArray) {
-        val quote = Quotes.random(Prefs.getSchools(context))
-        ids.forEach { id -> update(context, manager, id, quote) }
-    }
-
-    override fun onReceive(context: Context, intent: Intent) {
-        super.onReceive(context, intent)
-        if (intent.action == ACTION_REFRESH) {
-            updateAll(context, Quotes.random(Prefs.getSchools(context)))
-        }
-    }
-
     companion object {
-        const val ACTION_REFRESH = "com.bjorn.quotefilosofis.REFRESH_WIDGET"
-
         private val BACKGROUNDS = intArrayOf(
-            R.drawable.widget_bg_0, R.drawable.widget_bg_1, R.drawable.widget_bg_2,
-            R.drawable.widget_bg_3, R.drawable.widget_bg_4
+            R.drawable.widget_bg_0,
+            R.drawable.widget_bg_1,
+            R.drawable.widget_bg_2,
+            R.drawable.widget_bg_3,
+            R.drawable.widget_bg_4
         )
 
-        fun updateAll(context: Context, quote: Quote) {
+        fun updateAll(context: Context) {
             val manager = AppWidgetManager.getInstance(context)
             val ids = manager.getAppWidgetIds(
-                ComponentName(context, QuoteWidgetProvider::class.java)
+                android.content.ComponentName(context, QuoteWidgetProvider::class.java)
             )
-            ids.forEach { id -> update(context, manager, id, quote) }
+            for (id in ids) updateWidget(context, manager, id)
         }
 
-        private fun update(context: Context, manager: AppWidgetManager, id: Int, quote: Quote) {
+        fun updateWidget(context: Context, manager: AppWidgetManager, widgetId: Int) {
+            val lang    = Prefs.getLanguage(context)
+            val schools = Prefs.getActiveSchools(context)
+            val pool    = ALL_QUOTES.filter { it.school in schools }
+            val quote   = if (pool.isEmpty()) null else pool.random()
+
             val views = RemoteViews(context.packageName, R.layout.widget_quote)
-            views.setTextViewText(R.id.widget_quote, "“${quote.text}”")
-            views.setTextViewText(R.id.widget_author, "— ${quote.author} · ${quote.school}")
+
+            if (quote != null) {
+                val text   = quote.displayText(lang)
+                val school = schoolLabel(quote.school, lang)
+                views.setTextViewText(R.id.widget_text, "“$text”")
+                views.setTextViewText(R.id.widget_author, "— ${quote.author} · $school")
+            } else {
+                views.setTextViewText(R.id.widget_text, if (lang == "en") "No school selected." else "Tidak ada aliran yang dipilih.")
+                views.setTextViewText(R.id.widget_author, "")
+            }
 
             val level = Prefs.getWidgetAlphaLevel(context).coerceIn(0, 4)
             views.setInt(R.id.widget_root, "setBackgroundResource", BACKGROUNDS[level])
 
-            val refresh = Intent(context, QuoteWidgetProvider::class.java).setAction(ACTION_REFRESH)
-            val pi = PendingIntent.getBroadcast(
-                context, 0, refresh,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-            )
-            views.setOnClickPendingIntent(R.id.widget_root, pi)
-            manager.updateAppWidget(id, views)
+            manager.updateAppWidget(widgetId, views)
         }
+    }
+
+    override fun onUpdate(context: Context, manager: AppWidgetManager, ids: IntArray) {
+        for (id in ids) updateWidget(context, manager, id)
     }
 }
