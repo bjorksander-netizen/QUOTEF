@@ -11,8 +11,8 @@ android {
         applicationId = "com.bjorn.quotefilosofis"
         minSdk = 24
         targetSdk = 34
-        versionCode = 4
-        versionName = "1.3"
+        versionCode = 5
+        versionName = "1.4"
     }
 
     buildTypes {
@@ -28,6 +28,14 @@ android {
 
     kotlinOptions {
         jvmTarget = "17"
+    }
+
+    // Nama file APK: QUOTEF-<versi>.apk
+    applicationVariants.all {
+        outputs.all {
+            (this as com.android.build.gradle.internal.api.BaseVariantOutputImpl).outputFileName =
+                "QUOTEF-${defaultConfig.versionName}.apk"
+        }
     }
 }
 
