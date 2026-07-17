@@ -1,9 +1,14 @@
 package com.bjorn.quotefilosofis
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.slider.Slider
@@ -48,10 +53,23 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        NotificationHelper.createChannels(this)
+        requestNotificationPermission()
         bindViews()
         loadPrefs()
         setupListeners()
         applyLanguage()
+    }
+
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= 33 &&
+            ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.POST_NOTIFICATIONS), 100
+            )
+        }
     }
 
     private fun bindViews() {
@@ -66,7 +84,7 @@ class MainActivity : AppCompatActivity() {
         intervalSlider      = findViewById(R.id.interval_slider)
         intervalLabel       = findViewById(R.id.interval_label)
         labelMode           = findViewById(R.id.label_mode)
-        btmModeNormal       = findViewById(R.id.btn_mode_normal)
+        btnModeNormal       = findViewById(R.id.btn_mode_normal)
         btnModeLockscreen   = findViewById(R.id.btn_mode_lockscreen)
         btnModeSilent       = findViewById(R.id.btn_mode_silent)
         btnModeOff          = findViewById(R.id.btn_mode_off)
@@ -121,16 +139,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupListeners() {
-        val lang get() = currentLang()
-
         langToggle.addOnButtonCheckedListener { _, _, _ -> applyLanguage() }
 
         intervalSlider.addOnChangeListener { _, value, _ ->
-            intervalLabel.text = intervalDisplay(value.toInt(), lang)
+            intervalLabel.text = intervalDisplay(value.toInt(), currentLang())
         }
 
         alphaSlider.addOnChangeListener { _, value, _ ->
-            alphaLabel.text = alphaDisplay(value.toInt(), lang)
+            alphaLabel.text = alphaDisplay(value.toInt(), currentLang())
         }
 
         btnSave.setOnClickListener { saveAndApply() }
@@ -169,7 +185,7 @@ class MainActivity : AppCompatActivity() {
             labelNotif.text   = "Notifikasi"
             intervalLabel.text = intervalDisplay(intervalSlider.value.toInt(), lang)
             labelMode.text    = "Mode"
-            btmModeNormal.text      = "Normal"
+            btnModeNormal.text      = "Normal"
             btnModeLockscreen.text  = "Lockscreen"
             btnModeSilent.text      = "Senyap"
             btnModeOff.text         = "Mati"
@@ -215,7 +231,7 @@ class MainActivity : AppCompatActivity() {
         Prefs.setActiveSchools(this, schools)
 
         // Reschedule & update widget
-        QuoteScheduler.schedule(this)
+        QuoteWorker.schedule(this)
         QuoteWidgetProvider.updateAll(this)
     }
 
@@ -225,7 +241,7 @@ class MainActivity : AppCompatActivity() {
     private fun intervalDisplay(idx: Int, lang: String): String {
         val mins = intervalValues.getOrElse(idx) { 60 }
         val label = when {
-            mins < 60  -> if (lang == "en") "$mins min"      else "$mins menit"
+            mins < 60   -> if (lang == "en") "$mins min"      else "$mins menit"
             mins < 1440 -> if (lang == "en") "${mins/60} hr"  else "${mins/60} jam"
             else        -> if (lang == "en") "Once a day"     else "Sekali sehari"
         }

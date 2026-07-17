@@ -11,9 +11,8 @@ import java.util.concurrent.TimeUnit
 class QuoteWorker(ctx: Context, params: WorkerParameters) : CoroutineWorker(ctx, params) {
 
     override suspend fun doWork(): Result {
-        val quote = Quotes.random(Prefs.getSchools(applicationContext))
-        NotificationHelper.show(applicationContext, quote)
-        QuoteWidgetProvider.updateAll(applicationContext, quote)
+        NotificationHelper.showQuote(applicationContext)
+        QuoteWidgetProvider.updateAll(applicationContext)
         return Result.success()
     }
 
@@ -21,7 +20,7 @@ class QuoteWorker(ctx: Context, params: WorkerParameters) : CoroutineWorker(ctx,
         private const val WORK_NAME = "quote_periodic"
 
         fun schedule(c: Context) {
-            val minutes = Prefs.getIntervalMinutes(c).coerceAtLeast(15L)
+            val minutes = Prefs.getIntervalMinutes(c).toLong().coerceAtLeast(15L)
             val request = PeriodicWorkRequestBuilder<QuoteWorker>(minutes, TimeUnit.MINUTES).build()
             WorkManager.getInstance(c).enqueueUniquePeriodicWork(
                 WORK_NAME, ExistingPeriodicWorkPolicy.UPDATE, request

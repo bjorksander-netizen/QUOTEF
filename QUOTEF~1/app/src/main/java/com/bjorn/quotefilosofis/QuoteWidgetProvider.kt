@@ -1,8 +1,11 @@
 package com.bjorn.quotefilosofis
 
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
 import android.widget.RemoteViews
 
 class QuoteWidgetProvider : AppWidgetProvider() {
@@ -19,7 +22,7 @@ class QuoteWidgetProvider : AppWidgetProvider() {
         fun updateAll(context: Context) {
             val manager = AppWidgetManager.getInstance(context)
             val ids = manager.getAppWidgetIds(
-                android.content.ComponentName(context, QuoteWidgetProvider::class.java)
+                ComponentName(context, QuoteWidgetProvider::class.java)
             )
             for (id in ids) updateWidget(context, manager, id)
         }
@@ -44,6 +47,17 @@ class QuoteWidgetProvider : AppWidgetProvider() {
 
             val level = Prefs.getWidgetAlphaLevel(context).coerceIn(0, 4)
             views.setInt(R.id.widget_root, "setBackgroundResource", BACKGROUNDS[level])
+
+            // Ketuk widget = quote baru
+            val intent = Intent(context, QuoteWidgetProvider::class.java).apply {
+                action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+                putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(widgetId))
+            }
+            val pending = PendingIntent.getBroadcast(
+                context, widgetId, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+            views.setOnClickPendingIntent(R.id.widget_root, pending)
 
             manager.updateAppWidget(widgetId, views)
         }
