@@ -41,4 +41,9 @@ object Prefs {
     fun getWidgetAlphaLevel(c: Context): Int = sp(c).getInt("widget_alpha", 1)
     fun setWidgetAlphaLevel(c: Context, v: Int) =
         sp(c).edit().putInt("widget_alpha", v.coerceIn(0, 4)).apply()
+
+    // ── Last shown quote (index di ALL_QUOTES) untuk fitur share ─────────────
+    fun getLastQuoteIndex(c: Context): Int = sp(c).getInt("last_quote_index", -1)
+    fun setLastQuoteIndex(c: Context, v: Int) =
+        sp(c).edit().putInt("last_quote_index", v).apply()
 }

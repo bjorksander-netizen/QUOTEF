@@ -36,10 +36,22 @@ class QuoteWidgetProvider : AppWidgetProvider() {
             val views = RemoteViews(context.packageName, R.layout.widget_quote)
 
             if (quote != null) {
+                val index  = ALL_QUOTES.indexOf(quote)
+                Prefs.setLastQuoteIndex(context, index)
+
                 val text   = quote.displayText(lang)
                 val school = schoolLabel(quote.school, lang)
                 views.setTextViewText(R.id.widget_text, "“$text”")
-                views.setTextViewText(R.id.widget_author, "— ${quote.author} · $school")
+                views.setTextViewText(R.id.widget_author, "— ${quote.author} · $school  ⇪")
+
+                // Ketuk baris penulis = bagikan quote yang SAMA dengan yang tampil
+                val shareIntent = Intent(context, ShareActivity::class.java)
+                    .putExtra(ShareActivity.EXTRA_QUOTE_INDEX, index)
+                val sharePi = PendingIntent.getActivity(
+                    context, 100000 + widgetId, shareIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
+                views.setOnClickPendingIntent(R.id.widget_author, sharePi)
             } else {
                 views.setTextViewText(R.id.widget_text, if (lang == "en") "No school selected." else "Tidak ada aliran yang dipilih.")
                 views.setTextViewText(R.id.widget_author, "")
@@ -48,7 +60,7 @@ class QuoteWidgetProvider : AppWidgetProvider() {
             val level = Prefs.getWidgetAlphaLevel(context).coerceIn(0, 4)
             views.setInt(R.id.widget_root, "setBackgroundResource", BACKGROUNDS[level])
 
-            // Ketuk widget = quote baru
+            // Ketuk area quote = quote baru
             val intent = Intent(context, QuoteWidgetProvider::class.java).apply {
                 action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
                 putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(widgetId))
@@ -57,6 +69,7 @@ class QuoteWidgetProvider : AppWidgetProvider() {
                 context, widgetId, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
+            views.setOnClickPendingIntent(R.id.widget_text, pending)
             views.setOnClickPendingIntent(R.id.widget_root, pending)
 
             manager.updateAppWidget(widgetId, views)

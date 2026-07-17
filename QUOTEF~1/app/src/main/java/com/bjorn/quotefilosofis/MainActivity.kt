@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var btnSave: MaterialButton
     private lateinit var btnShow: MaterialButton
+    private lateinit var btnShare: MaterialButton
 
     // ── Interval options (minutes) ────────────────────────────────────────────
     private val intervalValues = listOf(15, 30, 60, 120, 360, 720, 1440)
@@ -103,6 +104,7 @@ class MainActivity : AppCompatActivity() {
 
         btnSave             = findViewById(R.id.btn_save)
         btnShow             = findViewById(R.id.btn_show)
+        btnShare            = findViewById(R.id.btn_share)
     }
 
     private fun loadPrefs() {
@@ -154,6 +156,13 @@ class MainActivity : AppCompatActivity() {
             saveAndApply()
             NotificationHelper.showQuote(this)
         }
+        btnShare.setOnClickListener {
+            // Bagikan quote terakhir yang tampil (atau acak jika belum ada)
+            startActivity(
+                android.content.Intent(this, ShareActivity::class.java)
+                    .putExtra(ShareActivity.EXTRA_QUOTE_INDEX, Prefs.getLastQuoteIndex(this))
+            )
+        }
     }
 
     private fun applyLanguage() {
@@ -179,6 +188,7 @@ class MainActivity : AppCompatActivity() {
             cbTimur.text            = "Eastern"
             btnSave.text      = "Save settings"
             btnShow.text      = "Show quote now"
+            btnShare.text     = "Share quote"
         } else {
             titleText.text    = "Quote Filosofis"
             subtitleText.text = "Kebijaksanaan harian · filsafat di saku"
@@ -200,6 +210,7 @@ class MainActivity : AppCompatActivity() {
             cbTimur.text            = "Timur"
             btnSave.text      = "Simpan pengaturan"
             btnShow.text      = "Tampilkan quote sekarang"
+            btnShare.text     = "Bagikan quote"
         }
     }
 
