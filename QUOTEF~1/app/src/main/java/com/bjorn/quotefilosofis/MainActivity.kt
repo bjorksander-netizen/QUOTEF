@@ -201,7 +201,7 @@ class MainActivity : AppCompatActivity() {
     private fun applyLanguage() {
         val lang = currentLang()
         if (lang == "en") {
-            titleText.text    = "Quote Filosofis"
+            titleText.text    = "QUOTEF"
             subtitleText.text = "Daily wisdom · pocket philosophy"
             labelNotif.text   = "Notifications"
             intervalLabel.text = intervalDisplay(intervalSlider.value.toInt(), lang)
@@ -231,7 +231,7 @@ class MainActivity : AppCompatActivity() {
             btnShow.text      = "Show quote now"
             btnShare.text     = "Share quote"
         } else {
-            titleText.text    = "Quote Filosofis"
+            titleText.text    = "QUOTEF"
             subtitleText.text = "Kebijaksanaan harian · filsafat di saku"
             labelNotif.text   = "Notifikasi"
             intervalLabel.text = intervalDisplay(intervalSlider.value.toInt(), lang)
