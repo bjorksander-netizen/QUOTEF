@@ -304,13 +304,13 @@
                     android:buttonTint="#4DB6AC" android:checked="true" android:layout_marginBottom="4dp"/>
 
                 <CheckBox android:id="@+id/cb_eksistensialisme"
-                    android:layout_width="match_parent" android:layout_height="wratp_content"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:text="Eksistensialisme" android:textColor="#DDFFFFFF"
                     android:buttonTint="#4DB6AC" android:checked="true" android:layout_marginBottom="4dp"/>
 
                 <CheckBox android:id="@+id/cb_absurdisme"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:text="Acsurdisme" android:textColor="#DDFFFFFF"
+                    android:text="Absurdisme" android:textColor="#DDFFFFFF"
                     android:buttonTint="#4DB6AC" android:checked="true" android:layout_marginBottom="4dp"/>
 
                 <CheckBox android:id="@+id/cb_timur"
@@ -327,7 +327,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:text="Simpan penhaturan"
+            android:text="Simpan pengaturan"
             android:textColor="#121417"
             android:paddingTop="14dp"
             android:paddingBottom="14dp"

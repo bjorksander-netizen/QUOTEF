@@ -9,7 +9,7 @@
     android:background="@drawable/widget_bg_1">
 
     <TextView
-        android:id="@+id/widget_quote"
+        android:id="@+id/widget_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
