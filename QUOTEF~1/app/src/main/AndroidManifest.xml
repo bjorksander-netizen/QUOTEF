@@ -20,6 +20,25 @@
             </intent-filter>
         </activity>
 
+        <!-- Activity transparan untuk render & share kartu quote -->
+        <activity
+            android:name=".ShareActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- FileProvider untuk membagikan gambar kartu quote -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.bjorn.quotefilosofis.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
         <receiver
             android:name=".QuoteWidgetProvider"
             android:exported="false">
