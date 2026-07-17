@@ -44,6 +44,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var cbAbsurdisme: CheckBox
     private lateinit var cbTimur: CheckBox
 
+    private lateinit var labelShare: TextView
+    private lateinit var labelShareSize: TextView
+    private lateinit var btnSizeSmall: MaterialButton
+    private lateinit var btnSizeMedium: MaterialButton
+    private lateinit var btnSizeLarge: MaterialButton
+    private lateinit var labelShareTheme: TextView
+    private lateinit var btnThemeBasic: MaterialButton
+    private lateinit var btnThemeRandom: MaterialButton
+
     private lateinit var btnSave: MaterialButton
     private lateinit var btnShow: MaterialButton
     private lateinit var btnShare: MaterialButton
@@ -102,6 +111,15 @@ class MainActivity : AppCompatActivity() {
         cbAbsurdisme        = findViewById(R.id.cb_absurdisme)
         cbTimur             = findViewById(R.id.cb_timur)
 
+        labelShare          = findViewById(R.id.label_share)
+        labelShareSize      = findViewById(R.id.label_share_size)
+        btnSizeSmall        = findViewById(R.id.btn_size_small)
+        btnSizeMedium       = findViewById(R.id.btn_size_medium)
+        btnSizeLarge        = findViewById(R.id.btn_size_large)
+        labelShareTheme     = findViewById(R.id.label_share_theme)
+        btnThemeBasic       = findViewById(R.id.btn_theme_basic)
+        btnThemeRandom      = findViewById(R.id.btn_theme_random)
+
         btnSave             = findViewById(R.id.btn_save)
         btnShow             = findViewById(R.id.btn_show)
         btnShare            = findViewById(R.id.btn_share)
@@ -129,6 +147,21 @@ class MainActivity : AppCompatActivity() {
 
         // Alpha
         alphaSlider.value = Prefs.getWidgetAlphaLevel(this).toFloat()
+
+        // Share: ukuran teks
+        val sizeToggle = findViewById<MaterialButtonToggleGroup>(R.id.share_size_toggle)
+        sizeToggle.check(when (Prefs.getShareTextSize(this)) {
+            "small" -> R.id.btn_size_small
+            "large" -> R.id.btn_size_large
+            else    -> R.id.btn_size_medium
+        })
+
+        // Share: tema warna
+        val themeToggle = findViewById<MaterialButtonToggleGroup>(R.id.share_theme_toggle)
+        themeToggle.check(
+            if (Prefs.getShareTheme(this) == "random") R.id.btn_theme_random
+            else R.id.btn_theme_basic
+        )
 
         // Schools
         val active = Prefs.getActiveSchools(this)
@@ -179,6 +212,14 @@ class MainActivity : AppCompatActivity() {
             btnModeOff.text         = "Off"
             labelWidget.text  = "Widget"
             alphaLabel.text   = alphaDisplay(alphaSlider.value.toInt(), lang)
+            labelShare.text      = "Share Card"
+            labelShareSize.text  = "Text size"
+            btnSizeSmall.text    = "Small"
+            btnSizeMedium.text   = "Medium"
+            btnSizeLarge.text    = "Large"
+            labelShareTheme.text = "Color theme"
+            btnThemeBasic.text   = "Basic"
+            btnThemeRandom.text  = "Randomize"
             labelSchool.text  = "Philosophy Schools"
             cbOptimisme.text        = "Optimism"
             cbStoisisme.text        = "Stoicism"
@@ -201,6 +242,14 @@ class MainActivity : AppCompatActivity() {
             btnModeOff.text         = "Mati"
             labelWidget.text  = "Widget"
             alphaLabel.text   = alphaDisplay(alphaSlider.value.toInt(), lang)
+            labelShare.text      = "Kartu Share"
+            labelShareSize.text  = "Ukuran teks"
+            btnSizeSmall.text    = "Kecil"
+            btnSizeMedium.text   = "Sedang"
+            btnSizeLarge.text    = "Besar"
+            labelShareTheme.text = "Tema warna"
+            btnThemeBasic.text   = "Dasar"
+            btnThemeRandom.text  = "Acak"
             labelSchool.text  = "Aliran Filosofi"
             cbOptimisme.text        = "Optimisme"
             cbStoisisme.text        = "Stoisisme"
@@ -231,6 +280,18 @@ class MainActivity : AppCompatActivity() {
         Prefs.setNotifMode(this, mode)
 
         Prefs.setWidgetAlphaLevel(this, alphaSlider.value.toInt())
+
+        val sizeToggle = findViewById<MaterialButtonToggleGroup>(R.id.share_size_toggle)
+        Prefs.setShareTextSize(this, when (sizeToggle.checkedButtonId) {
+            R.id.btn_size_small -> "small"
+            R.id.btn_size_large -> "large"
+            else                -> "medium"
+        })
+
+        val themeToggle = findViewById<MaterialButtonToggleGroup>(R.id.share_theme_toggle)
+        Prefs.setShareTheme(this,
+            if (themeToggle.checkedButtonId == R.id.btn_theme_random) "random" else "basic"
+        )
 
         val schools = mutableSetOf<String>()
         if (cbOptimisme.isChecked)        schools += "Optimisme"

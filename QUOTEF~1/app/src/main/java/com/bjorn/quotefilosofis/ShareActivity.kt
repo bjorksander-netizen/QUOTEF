@@ -18,8 +18,16 @@ import java.io.FileOutputStream
 /**
  * Activity transparan: render quote menjadi kartu gambar (gaya kartu lirik),
  * lalu buka share sheet Android agar bisa dibagikan ke media sosial mana pun.
+ * Ukuran teks & tema warna mengikuti pengaturan user (basic / randomize).
  */
 class ShareActivity : Activity() {
+
+    /** Palet warna kartu share. */
+    private data class Palette(
+        val bg: Int, val card: Int,
+        val title: Int, val sub: Int,
+        val quote: Int, val brand: Int
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,35 +63,47 @@ class ShareActivity : Activity() {
         finish()
     }
 
-    /** Kartu 1080x1920 bergaya kartu lirik: bg teal gelap, kartu rounded, teks besar. */
+    /** Kartu 1080x1920 bergaya kartu lirik. */
     private fun renderCard(quote: Quote, lang: String): Bitmap {
         val w = 1080
         val h = 1920
+
+        // ── Tema warna: basic (teal) atau acak dari daftar palet ─────────────
+        val palette = if (Prefs.getShareTheme(this) == "random") PALETTES.random()
+                      else PALETTES[0]
+
+        // ── Ukuran teks quote sesuai pengaturan ──────────────────────────────
+        val quoteSize = when (Prefs.getShareTextSize(this)) {
+            "small" -> 50f
+            "large" -> 76f
+            else    -> 62f
+        }
+
         val bmp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bmp)
-        canvas.drawColor(BG_COLOR)
+        canvas.drawColor(palette.bg)
 
         val cardMargin = 120f
         val pad = 76f
         val contentWidth = (w - 2 * cardMargin - 2 * pad).toInt()
 
         val authorPaint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = 0xFFE8F4F6.toInt(); textSize = 46f
+            color = palette.title; textSize = 46f
             typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
         }
         val schoolPaint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = 0xFF7FA6AE.toInt(); textSize = 40f
+            color = palette.sub; textSize = 40f
         }
         val quotePaint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = 0xFFDCEFF2.toInt(); textSize = 62f
+            color = palette.quote; textSize = quoteSize
             typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
         }
         val brandPaint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = 0xFF8FB0B8.toInt(); textSize = 44f
+            color = palette.brand; textSize = 44f
             typeface = Typeface.create("sans-serif", Typeface.BOLD)
         }
         val dividerPaint = Paint().apply { color = 0x26FFFFFF }
-        val cardPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = CARD_COLOR }
+        val cardPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = palette.card }
 
         val text = quote.displayText(lang)
         val quoteLayout = StaticLayout.Builder
@@ -113,14 +133,28 @@ class ShareActivity : Activity() {
         quoteLayout.draw(canvas)
         canvas.restore()
         y += quoteLayout.height + 68f + 32f
-        canvas.drawText("❝ Quote Filosofis", x, y, brandPaint)
+        canvas.drawText("❝ QUOTEF", x, y, brandPaint)
 
         return bmp
     }
 
     companion object {
         const val EXTRA_QUOTE_INDEX = "quote_index"
-        private val BG_COLOR = 0xFF0A2530.toInt()
-        private val CARD_COLOR = 0xFF10333E.toInt()
+
+        /** Palet[0] = tema dasar (teal). Sisanya dipakai mode randomize. */
+        private val PALETTES = listOf(
+            Palette(0xFF0A2530.toInt(), 0xFF10333E.toInt(), 0xFFE8F4F6.toInt(),
+                    0xFF7FA6AE.toInt(), 0xFFDCEFF2.toInt(), 0xFF8FB0B8.toInt()),
+            Palette(0xFF1A1030.toInt(), 0xFF261A44.toInt(), 0xFFEDE7F6.toInt(),
+                    0xFFB39DDB.toInt(), 0xFFF3EEFB.toInt(), 0xFFB0A4CE.toInt()),
+            Palette(0xFF0B2416.toInt(), 0xFF143423.toInt(), 0xFFE8F5E9.toInt(),
+                    0xFFA5D6A7.toInt(), 0xFFF0F9F0.toInt(), 0xFF9CC4A0.toInt()),
+            Palette(0xFF2A0E12.toInt(), 0xFF3D1A20.toInt(), 0xFFFFEBEE.toInt(),
+                    0xFFEF9A9A.toInt(), 0xFFFFF3F4.toInt(), 0xFFD9A0A4.toInt()),
+            Palette(0xFF0A1633.toInt(), 0xFF13244D.toInt(), 0xFFE3F2FD.toInt(),
+                    0xFF90CAF9.toInt(), 0xFFF0F7FE.toInt(), 0xFF9BB8D8.toInt()),
+            Palette(0xFF1C1A14.toInt(), 0xFF2B2718.toInt(), 0xFFFFF8E1.toInt(),
+                    0xFFFFD54F.toInt(), 0xFFFFFBEC.toInt(), 0xFFD4BC77.toInt())
+        )
     }
 }
