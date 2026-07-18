@@ -47,15 +47,32 @@ object Prefs {
     fun setLastQuoteIndex(c: Context, v: Int) =
         sp(c).edit().putInt("last_quote_index", v).apply()
 
-    // ── Share card: ukuran teks "small" | "medium" | "large" ─────────────────
-    fun getShareTextSize(c: Context): String =
-        sp(c).getString("share_text_size", "medium") ?: "medium"
-    fun setShareTextSize(c: Context, v: String) =
-        sp(c).edit().putString("share_text_size", v).apply()
+    // ── Share card colors ─────────────────────────────────────────────────
+    fun getShareBgColor(c: Context): Int = sp(c).getInt("share_bg_color", 0xFF0A2530.toInt())
+    fun setShareBgColor(c: Context, v: Int) =
+        sp(c).edit().putInt("share_bg_color", v).apply()
 
-    // ── Share card: tema warna "basic" | "random" ────────────────────────────
-    fun getShareTheme(c: Context): String =
-        sp(c).getString("share_theme", "basic") ?: "basic"
-    fun setShareTheme(c: Context, v: String) =
-        sp(c).edit().putString("share_theme", v).apply()
+    fun getShareCardColor(c: Context): Int = sp(c).getInt("share_card_color", 0xFF10333E.toInt())
+    fun setShareCardColor(c: Context, v: Int) =
+        sp(c).edit().putInt("share_card_color", v).apply()
+
+    fun getShareTextColor(c: Context): Int = sp(c).getInt("share_text_color", 0xFFDCEFF2.toInt())
+    fun setShareTextColor(c: Context, v: Int) =
+        sp(c).edit().putInt("share_text_color", v).apply()
+
+    fun getShareAuthorColor(c: Context): Int = sp(c).getInt("share_author_color", 0xFFE8F4F6.toInt())
+    fun setShareAuthorColor(c: Context, v: Int) =
+        sp(c).edit().putInt("share_author_color", v).apply()
+
+    fun getShareSchoolColor(c: Context): Int = sp(c).getInt("share_school_color", 0xFF7FA6AE.toInt())
+    fun setShareSchoolColor(c: Context, v: Int) =
+        sp(c).edit().putInt("share_school_color", v).apply()
+
+    fun getShareBrandColor(c: Context): Int = sp(c).getInt("share_brand_color", 0xFF8FB0B8.toInt())
+    fun setShareBrandColor(c: Context, v: Int) =
+        sp(c).edit().putInt("share_brand_color", v).apply()
+
+    fun getShareDividerColor(c: Context): Int = sp(c).getInt("share_divider_color", 0x26FFFFFF.toInt())
+    fun setShareDividerColor(c: Context, v: Int) =
+        sp(c).edit().putInt("share_divider_color", v).apply()
 }

@@ -28,6 +28,13 @@
             android:noHistory="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
+        <!-- Activity preview share -->
+        <activity
+            android:name=".PreviewShareActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.QuoteFilosofis" />
+
         <!-- FileProvider untuk membagikan gambar kartu quote -->
         <provider
             android:name="androidx.core.content.FileProvider"

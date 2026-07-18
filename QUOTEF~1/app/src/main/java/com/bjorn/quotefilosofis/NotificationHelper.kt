@@ -43,7 +43,12 @@ object NotificationHelper {
         val pool    = ALL_QUOTES.filter { it.school in schools }
         if (pool.isEmpty()) return
 
-        val quote = pool.random()
+        val lastIdx = Prefs.getLastQuoteIndex(context)
+        val quote = if (lastIdx >= 0) {
+            ALL_QUOTES.getOrNull(lastIdx)?.takeIf { it.school in schools } ?: pool.random()
+        } else {
+            pool.random()
+        }
         val index = ALL_QUOTES.indexOf(quote)
         Prefs.setLastQuoteIndex(context, index)
 

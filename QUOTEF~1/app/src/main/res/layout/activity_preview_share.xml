@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#121417"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/preview_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pratinjau Share"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/preview_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tampilan quote yang akan dibagikan"
+            android:textColor="#88FFFFFF"
+            android:textSize="13sp"
+            android:layout_marginBottom="20dp" />
+
+        <!-- Preview Card Container -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:strokeColor="#334DB6AC"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:id="@+id/preview_card_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#0A2530"
+                android:padding="24dp">
+
+                <LinearLayout
+                    android:id="@+id/preview_card_inner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#10333E"
+                    android:padding="24dp">
+
+                    <TextView
+                        android:id="@+id/preview_author"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="— Author Name"
+                        android:textColor="#E8F4F6"
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif-medium" />
+
+                    <TextView
+                        android:id="@+id/preview_school"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="School"
+                        android:textColor="#7FA6AE"
+                        android:textSize="14sp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="16dp" />
+
+                    <View
+                        android:id="@+id/preview_divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#26FFFFFF"
+                        android:layout_marginBottom="16dp" />
+
+                    <TextView
+                        android:id="@+id/preview_quote_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""Quote text here...""
+                        android:textColor="#DCEFF2"
+                        android:textSize="18sp"
+                        android:lineSpacingExtra="4dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:layout_marginBottom="20dp" />
+
+                    <TextView
+                        android:id="@+id/preview_brand"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="❝ Quote Filosofis"
+                        android:textColor="#8FB0B8"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Action Buttons -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_share_now"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:text="Bagikan Sekarang"
+            android:textColor="#121417"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            app:backgroundTint="#4DB6AC"
+            app:cornerRadius="50dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="Kembali"
+            android:textColor="#4DB6AC"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            app:strokeColor="#4DB6AC"
+            app:cornerRadius="50dp" />
+
+    </LinearLayout>
+</ScrollView>

@@ -31,13 +31,18 @@ class QuoteWidgetProvider : AppWidgetProvider() {
             val lang    = Prefs.getLanguage(context)
             val schools = Prefs.getActiveSchools(context)
             val pool    = ALL_QUOTES.filter { it.school in schools }
-            val quote   = if (pool.isEmpty()) null else pool.random()
+
+            val lastIdx = Prefs.getLastQuoteIndex(context)
+            val quote = if (lastIdx >= 0) {
+                ALL_QUOTES.getOrNull(lastIdx)?.takeIf { it.school in schools }
+            } else {
+                pool.randomOrNull()
+            }
 
             val views = RemoteViews(context.packageName, R.layout.widget_quote)
 
             if (quote != null) {
                 val index  = ALL_QUOTES.indexOf(quote)
-                Prefs.setLastQuoteIndex(context, index)
 
                 val text   = quote.displayText(lang)
                 val school = schoolLabel(quote.school, lang)

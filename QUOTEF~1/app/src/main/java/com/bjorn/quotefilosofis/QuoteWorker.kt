@@ -11,8 +11,16 @@ import java.util.concurrent.TimeUnit
 class QuoteWorker(ctx: Context, params: WorkerParameters) : CoroutineWorker(ctx, params) {
 
     override suspend fun doWork(): Result {
-        NotificationHelper.showQuote(applicationContext)
-        QuoteWidgetProvider.updateAll(applicationContext)
+        val context = applicationContext
+        val schools = Prefs.getActiveSchools(context)
+        val pool = ALL_QUOTES.filter { it.school in schools }
+        if (pool.isNotEmpty()) {
+            val quote = pool.random()
+            val index = ALL_QUOTES.indexOf(quote)
+            Prefs.setLastQuoteIndex(context, index)
+        }
+        NotificationHelper.showQuote(context)
+        QuoteWidgetProvider.updateAll(context)
         return Result.success()
     }
 

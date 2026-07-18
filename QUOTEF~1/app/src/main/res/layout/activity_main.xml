@@ -447,6 +447,573 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- ── Preview quote card ────────────────────────────────────────── -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/preview_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardBackgroundColor="#1A2A32"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:strokeColor="#334DB6AC"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:id="@+id/preview_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="QUOTE SAAT INI"
+                    android:textColor="#4DB6AC"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.08"
+                    android:textAllCaps="true"
+                    android:layout_marginBottom="12dp" />
+
+                <TextView
+                    android:id="@+id/preview_quote_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#E0F0F4"
+                    android:textSize="15sp"
+                    android:lineSpacingExtra="3dp"
+                    android:textStyle="italic"
+                    android:text="Quote akan muncul di sini..." />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#334DB6AC"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="12dp" />
+
+                <TextView
+                    android:id="@+id/preview_author"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#7FA6AE"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ── Share card customization ──────────────────────────────────── -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardBackgroundColor="#1E2227"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:id="@+id/label_share_custom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="KUSTOMISASI SHARE"
+                    android:textColor="#AAFFFFFF"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.08"
+                    android:textAllCaps="true"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Background color -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <View
+                        android:id="@+id/preview_bg_color"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="#0A2530"
+                        android:layout_marginEnd="12dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Warna Latar"
+                            android:textColor="#DDFFFFFF"
+                            android:textSize="13sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="4dp">
+
+                            <EditText
+                                android:id="@+id/hex_bg_color"
+                                android:layout_width="0dp"
+                                android:layout_height="40dp"
+                                android:layout_weight="1"
+                                android:hint="#0A2530"
+                                android:textColor="#DDFFFFFF"
+                                android:textColorHint="#55FFFFFF"
+                                android:textSize="13sp"
+                                android:fontFamily="monospace"
+                                android:background="#2A2D33"
+                                android:paddingStart="8dp"
+                                android:paddingEnd="8dp"
+                                android:inputType="textCapCharacters"
+                                android:maxLength="9"
+                                android:singleLine="true" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_pick_bg_color"
+                                style="@style/Widget.Material3.Button.TonalButton"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_marginStart="8dp"
+                                android:insetTop="0dp"
+                                android:insetBottom="0dp"
+                                android:padding="0dp"
+                                app:icon="@android:drawable/ic_menu_edit"
+                                app:iconPadding="0dp"
+                                app:cornerRadius="10dp"
+                                android:contentDescription="Pick color" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Card color -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <View
+                        android:id="@+id/preview_card_color"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="#10333E"
+                        android:layout_marginEnd="12dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Warna Kartu"
+                            android:textColor="#DDFFFFFF"
+                            android:textSize="13sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="4dp">
+
+                            <EditText
+                                android:id="@+id/hex_card_color"
+                                android:layout_width="0dp"
+                                android:layout_height="40dp"
+                                android:layout_weight="1"
+                                android:hint="#10333E"
+                                android:textColor="#DDFFFFFF"
+                                android:textColorHint="#55FFFFFF"
+                                android:textSize="13sp"
+                                android:fontFamily="monospace"
+                                android:background="#2A2D33"
+                                android:paddingStart="8dp"
+                                android:paddingEnd="8dp"
+                                android:inputType="textCapCharacters"
+                                android:maxLength="9"
+                                android:singleLine="true" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_pick_card_color"
+                                style="@style/Widget.Material3.Button.TonalButton"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_marginStart="8dp"
+                                android:insetTop="0dp"
+                                android:insetBottom="0dp"
+                                android:padding="0dp"
+                                app:icon="@android:drawable/ic_menu_edit"
+                                app:iconPadding="0dp"
+                                app:cornerRadius="10dp"
+                                android:contentDescription="Pick color" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Text color -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <View
+                        android:id="@+id/preview_text_color"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="#DCEFF2"
+                        android:layout_marginEnd="12dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Warna Teks Quote"
+                            android:textColor="#DDFFFFFF"
+                            android:textSize="13sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="4dp">
+
+                            <EditText
+                                android:id="@+id/hex_text_color"
+                                android:layout_width="0dp"
+                                android:layout_height="40dp"
+                                android:layout_weight="1"
+                                android:hint="#DCEFF2"
+                                android:textColor="#DDFFFFFF"
+                                android:textColorHint="#55FFFFFF"
+                                android:textSize="13sp"
+                                android:fontFamily="monospace"
+                                android:background="#2A2D33"
+                                android:paddingStart="8dp"
+                                android:paddingEnd="8dp"
+                                android:inputType="textCapCharacters"
+                                android:maxLength="9"
+                                android:singleLine="true" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_pick_text_color"
+                                style="@style/Widget.Material3.Button.TonalButton"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_marginStart="8dp"
+                                android:insetTop="0dp"
+                                android:insetBottom="0dp"
+                                android:padding="0dp"
+                                app:icon="@android:drawable/ic_menu_edit"
+                                app:iconPadding="0dp"
+                                app:cornerRadius="10dp"
+                                android:contentDescription="Pick color" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Author color -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <View
+                        android:id="@+id/preview_author_color"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="#E8F4F6"
+                        android:layout_marginEnd="12dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Warna Nama"
+                            android:textColor="#DDFFFFFF"
+                            android:textSize="13sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="4dp">
+
+                            <EditText
+                                android:id="@+id/hex_author_color"
+                                android:layout_width="0dp"
+                                android:layout_height="40dp"
+                                android:layout_weight="1"
+                                android:hint="#E8F4F6"
+                                android:textColor="#DDFFFFFF"
+                                android:textColorHint="#55FFFFFF"
+                                android:textSize="13sp"
+                                android:fontFamily="monospace"
+                                android:background="#2A2D33"
+                                android:paddingStart="8dp"
+                                android:paddingEnd="8dp"
+                                android:inputType="textCapCharacters"
+                                android:maxLength="9"
+                                android:singleLine="true" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_pick_author_color"
+                                style="@style/Widget.Material3.Button.TonalButton"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_marginStart="8dp"
+                                android:insetTop="0dp"
+                                android:insetBottom="0dp"
+                                android:padding="0dp"
+                                app:icon="@android:drawable/ic_menu_edit"
+                                app:iconPadding="0dp"
+                                app:cornerRadius="10dp"
+                                android:contentDescription="Pick color" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- School color -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <View
+                        android:id="@+id/preview_school_color"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="#7FA6AE"
+                        android:layout_marginEnd="12dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Warna Aliran"
+                            android:textColor="#DDFFFFFF"
+                            android:textSize="13sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="4dp">
+
+                            <EditText
+                                android:id="@+id/hex_school_color"
+                                android:layout_width="0dp"
+                                android:layout_height="40dp"
+                                android:layout_weight="1"
+                                android:hint="#7FA6AE"
+                                android:textColor="#DDFFFFFF"
+                                android:textColorHint="#55FFFFFF"
+                                android:textSize="13sp"
+                                android:fontFamily="monospace"
+                                android:background="#2A2D33"
+                                android:paddingStart="8dp"
+                                android:paddingEnd="8dp"
+                                android:inputType="textCapCharacters"
+                                android:maxLength="9"
+                                android:singleLine="true" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_pick_school_color"
+                                style="@style/Widget.Material3.Button.TonalButton"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_marginStart="8dp"
+                                android:insetTop="0dp"
+                                android:insetBottom="0dp"
+                                android:padding="0dp"
+                                app:icon="@android:drawable/ic_menu_edit"
+                                app:iconPadding="0dp"
+                                app:cornerRadius="10dp"
+                                android:contentDescription="Pick color" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Brand color -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <View
+                        android:id="@+id/preview_brand_color"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="#8FB0B8"
+                        android:layout_marginEnd="12dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Warna Brand"
+                            android:textColor="#DDFFFFFF"
+                            android:textSize="13sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="4dp">
+
+                            <EditText
+                                android:id="@+id/hex_brand_color"
+                                android:layout_width="0dp"
+                                android:layout_height="40dp"
+                                android:layout_weight="1"
+                                android:hint="#8FB0B8"
+                                android:textColor="#DDFFFFFF"
+                                android:textColorHint="#55FFFFFF"
+                                android:textSize="13sp"
+                                android:fontFamily="monospace"
+                                android:background="#2A2D33"
+                                android:paddingStart="8dp"
+                                android:paddingEnd="8dp"
+                                android:inputType="textCapCharacters"
+                                android:maxLength="9"
+                                android:singleLine="true" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_pick_brand_color"
+                                style="@style/Widget.Material3.Button.TonalButton"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_marginStart="8dp"
+                                android:insetTop="0dp"
+                                android:insetBottom="0dp"
+                                android:padding="0dp"
+                                app:icon="@android:drawable/ic_menu_edit"
+                                app:iconPadding="0dp"
+                                app:cornerRadius="10dp"
+                                android:contentDescription="Pick color" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Divider color -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <View
+                        android:id="@+id/preview_divider_color"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="#26FFFFFF"
+                        android:layout_marginEnd="12dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Warna Garis"
+                            android:textColor="#DDFFFFFF"
+                            android:textSize="13sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="4dp">
+
+                            <EditText
+                                android:id="@+id/hex_divider_color"
+                                android:layout_width="0dp"
+                                android:layout_height="40dp"
+                                android:layout_weight="1"
+                                android:hint="#26FFFFFF"
+                                android:textColor="#DDFFFFFF"
+                                android:textColorHint="#55FFFFFF"
+                                android:textSize="13sp"
+                                android:fontFamily="monospace"
+                                android:background="#2A2D33"
+                                android:paddingStart="8dp"
+                                android:paddingEnd="8dp"
+                                android:inputType="textCapCharacters"
+                                android:maxLength="9"
+                                android:singleLine="true" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_pick_divider_color"
+                                style="@style/Widget.Material3.Button.TonalButton"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_marginStart="8dp"
+                                android:insetTop="0dp"
+                                android:insetBottom="0dp"
+                                android:padding="0dp"
+                                app:icon="@android:drawable/ic_menu_edit"
+                                app:iconPadding="0dp"
+                                app:cornerRadius="10dp"
+                                android:contentDescription="Pick color" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <!-- ── Action buttons ────────────────────────────────────────────── -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_save"

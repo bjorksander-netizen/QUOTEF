@@ -29,5 +29,5 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: QUOTEF
-          path: QUOTEF~1/app/build/outputs/apk/debug/QUOTEF-*.apk
+          name: QuoteFilosofis-APK
+          path: QUOTEF~1/app/build/outputs/apk/debug/app-debug.apk
