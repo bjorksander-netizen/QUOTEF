@@ -329,25 +329,8 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        val seekR = createSeekBar("R", Color.red(currentColor)) { progress, _ ->
-            updateColorFromSeekBars(hexInput, colorView, seekR, seekG, seekB, seekA)
-        }
-        val seekG = createSeekBar("G", Color.green(currentColor)) { progress, _ ->
-            updateColorFromSeekBars(hexInput, colorView, seekR, seekG, seekB, seekA)
-        }
-        val seekB = createSeekBar("B", Color.blue(currentColor)) { progress, _ ->
-            updateColorFromSeekBars(hexInput, colorView, seekR, seekG, seekB, seekA)
-        }
-        val seekA = createSeekBar("A", Color.alpha(currentColor)) { progress, _ ->
-            updateColorFromSeekBars(hexInput, colorView, seekR, seekG, seekB, seekA)
-        }
-
         layout.addView(colorView)
         layout.addView(hexInput)
-        layout.addView(seekR)
-        layout.addView(seekG)
-        layout.addView(seekB)
-        layout.addView(seekA)
 
         val okButton = android.widget.Button(this).apply {
             text = "OK"
@@ -376,77 +359,6 @@ class MainActivity : AppCompatActivity() {
         layout.addView(buttonLayout)
         dialog.setContentView(layout)
         dialog.show()
-    }
-
-    private fun createSeekBar(
-        label: String,
-        initial: Int,
-        onChanged: (Int, android.widget.SeekBar?) -> Unit
-    ): android.widget.LinearLayout {
-        val container = android.widget.LinearLayout(this).apply {
-            orientation = android.widget.LinearLayout.HORIZONTAL
-            gravity = android.view.Gravity.CENTER_VERTICAL
-            setPadding(0, 8, 0, 8)
-        }
-
-        val labelText = android.widget.TextView(this).apply {
-            text = label
-            setTextColor(Color.BLACK)
-            textSize = 14f
-            layoutParams = android.widget.LinearLayout.LayoutParams(60, android.widget.LinearLayout.LayoutParams.WRAP_CONTENT)
-        }
-
-        val seekBar = android.widget.SeekBar(this).apply {
-            max = 255
-            progress = initial
-            layoutParams = android.widget.LinearLayout.LayoutParams(0, android.widget.LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
-        }
-
-        val valueText = android.widget.TextView(this).apply {
-            text = String.format("%02X", initial)
-            setTextColor(Color.BLACK)
-            textSize = 14f
-            layoutParams = android.widget.LinearLayout.LayoutParams(80, android.widget.LinearLayout.LayoutParams.WRAP_CONTENT)
-        }
-
-        seekBar.setOnSeekBarChangeListener(object : android.widget.SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: android.widget.SeekBar?, progress: Int, fromUser: Boolean) {
-                valueText.text = String.format("%02X", progress)
-                onChanged(progress, seekBar)
-            }
-            override fun onStartTrackingTouch(seekBar: android.widget.SeekBar?) {}
-            override fun onStopTrackingTouch(seekBar: android.widget.SeekBar?) {}
-        })
-
-        container.addView(labelText)
-        container.addView(seekBar)
-        container.addView(valueText)
-        return container
-    }
-
-    private fun updateColorFromSeekBars(
-        hexInput: EditText,
-        colorView: View,
-        seekR: android.widget.LinearLayout,
-        seekG: android.widget.LinearLayout,
-        seekB: android.widget.LinearLayout,
-        seekA: android.widget.LinearLayout
-    ) {
-        val r = getSeekBarProgress(seekR)
-        val g = getSeekBarProgress(seekG)
-        val b = getSeekBarProgress(seekB)
-        val a = getSeekBarProgress(seekA)
-        val color = Color.argb(a, r, g, b)
-        colorView.setBackgroundColor(color)
-        hexInput.setText(String.format("%08X", color))
-    }
-
-    private fun getSeekBarProgress(container: android.widget.LinearLayout): Int {
-        for (i in 0 until container.childCount) {
-            val child = container.getChildAt(i)
-            if (child is android.widget.SeekBar) return child.progress
-        }
-        return 0
     }
 
     private fun setupHexInputs() {
