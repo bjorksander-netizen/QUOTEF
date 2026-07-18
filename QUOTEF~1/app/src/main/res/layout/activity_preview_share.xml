@@ -87,7 +87,7 @@
                         android:id="@+id/preview_quote_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text=""Quote text here...""
+                        android:text="Quote text here..."
                         android:textColor="#DCEFF2"
                         android:textSize="18sp"
                         android:lineSpacingExtra="4dp"
