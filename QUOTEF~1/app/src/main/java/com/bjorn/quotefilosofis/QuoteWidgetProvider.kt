@@ -10,7 +10,23 @@ import android.widget.RemoteViews
 
 class QuoteWidgetProvider : AppWidgetProvider() {
 
+    override fun onReceive(context: Context, intent: Intent?) {
+        if (intent?.action == ACTION_NEW_QUOTE) {
+            val schools = Prefs.getActiveSchools(context)
+            val pool = ALL_QUOTES.filter { it.school in schools }
+            if (pool.isNotEmpty()) {
+                val quote = pool.random()
+                Prefs.setLastQuoteIndex(context, ALL_QUOTES.indexOf(quote))
+            }
+            updateAll(context)
+            return
+        }
+        super.onReceive(context, intent)
+    }
+
     companion object {
+        const val ACTION_NEW_QUOTE = "com.bjorn.quotefilosofis.ACTION_NEW_QUOTE"
+
         private val BACKGROUNDS = intArrayOf(
             R.drawable.widget_bg_0,
             R.drawable.widget_bg_1,
@@ -36,7 +52,9 @@ class QuoteWidgetProvider : AppWidgetProvider() {
             val quote = if (lastIdx >= 0) {
                 ALL_QUOTES.getOrNull(lastIdx)?.takeIf { it.school in schools }
             } else {
-                pool.randomOrNull()
+                val r = pool.randomOrNull()
+                if (r != null) Prefs.setLastQuoteIndex(context, ALL_QUOTES.indexOf(r))
+                r
             }
 
             val views = RemoteViews(context.packageName, R.layout.widget_quote)
@@ -46,8 +64,8 @@ class QuoteWidgetProvider : AppWidgetProvider() {
 
                 val text   = quote.displayText(lang)
                 val school = schoolLabel(quote.school, lang)
-                views.setTextViewText(R.id.widget_text, "“$text”")
-                views.setTextViewText(R.id.widget_author, "— ${quote.author} · $school  ⇪")
+                views.setTextViewText(R.id.widget_text, "\u201c$text\u201d")
+                views.setTextViewText(R.id.widget_author, "\u2014 ${quote.author} \u00b7 $school  \u21ea")
 
                 // Ketuk baris penulis = bagikan quote yang SAMA dengan yang tampil
                 val shareIntent = Intent(context, ShareActivity::class.java)
@@ -66,12 +84,11 @@ class QuoteWidgetProvider : AppWidgetProvider() {
             views.setInt(R.id.widget_root, "setBackgroundResource", BACKGROUNDS[level])
 
             // Ketuk area quote = quote baru
-            val intent = Intent(context, QuoteWidgetProvider::class.java).apply {
-                action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-                putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(widgetId))
+            val newQuoteIntent = Intent(context, QuoteWidgetProvider::class.java).apply {
+                action = ACTION_NEW_QUOTE
             }
             val pending = PendingIntent.getBroadcast(
-                context, widgetId, intent,
+                context, widgetId, newQuoteIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
             views.setOnClickPendingIntent(R.id.widget_text, pending)

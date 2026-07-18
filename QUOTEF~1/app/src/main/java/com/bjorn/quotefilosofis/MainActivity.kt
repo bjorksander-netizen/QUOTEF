@@ -90,6 +90,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnShow: MaterialButton
     private lateinit var btnShare: MaterialButton
 
+    private var isRefreshingHex = false
+
     private val intervalValues = listOf(15, 30, 60, 120, 360, 720, 1440)
 
     private var selectedBgColor = 0xFF0A2530.toInt()
@@ -376,6 +378,7 @@ class MainActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
+                if (isRefreshingHex) return
                 val color = parseHexColor(s?.toString() ?: "")
                 if (color != null) {
                     onColorChanged(color)
@@ -415,6 +418,7 @@ class MainActivity : AppCompatActivity() {
         previewBrandColor.setBackgroundColor(selectedBrandColor)
         previewDividerColor.setBackgroundColor(selectedDividerColor)
 
+        isRefreshingHex = true
         if (hexBgColor.text.toString() != String.format("%08X", selectedBgColor)) {
             hexBgColor.setText(String.format("%08X", selectedBgColor))
         }
@@ -436,6 +440,7 @@ class MainActivity : AppCompatActivity() {
         if (hexDividerColor.text.toString() != String.format("%08X", selectedDividerColor)) {
             hexDividerColor.setText(String.format("%08X", selectedDividerColor))
         }
+        isRefreshingHex = false
     }
 
     private fun refreshPreview() {
@@ -494,7 +499,7 @@ class MainActivity : AppCompatActivity() {
         btnSave.setOnClickListener { saveAndApply() }
         btnShow.setOnClickListener {
             saveAndApply()
-            NotificationHelper.showQuote(this)
+            NotificationHelper.showQuote(this, pickNew = true)
             refreshPreview()
         }
         btnShare.setOnClickListener {
