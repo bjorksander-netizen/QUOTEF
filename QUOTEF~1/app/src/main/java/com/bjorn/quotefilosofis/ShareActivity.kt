@@ -57,11 +57,8 @@ class ShareActivity : Activity() {
         val canvas = Canvas(bmp)
 
         val bgColor = Prefs.getShareBgColor(this)
+        val accentColor = Prefs.getShareAccentColor(this)
         val cardColor = Prefs.getShareCardColor(this)
-        val textColor = Prefs.getShareTextColor(this)
-        val authorColor = Prefs.getShareAuthorColor(this)
-        val schoolColor = Prefs.getShareSchoolColor(this)
-        val brandColor = Prefs.getShareBrandColor(this)
         val dividerColor = Prefs.getShareDividerColor(this)
 
         canvas.drawColor(bgColor)
@@ -71,21 +68,21 @@ class ShareActivity : Activity() {
         val contentWidth = (w - 2 * cardMargin - 2 * pad).toInt()
 
         val authorPaint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = authorColor
+            color = accentColor
             textSize = 46f
             typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
         }
         val schoolPaint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = schoolColor
+            color = accentColor
             textSize = 40f
         }
         val quotePaint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = textColor
+            color = accentColor
             textSize = 62f
             typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
         }
         val brandPaint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = brandColor
+            color = accentColor
             textSize = 44f
             typeface = Typeface.create("sans-serif", Typeface.BOLD)
         }

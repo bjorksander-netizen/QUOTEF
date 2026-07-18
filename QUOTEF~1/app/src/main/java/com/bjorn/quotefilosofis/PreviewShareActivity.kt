@@ -76,11 +76,8 @@ class PreviewShareActivity : AppCompatActivity() {
         previewSchool.text = schoolLabel(quote.school, lang)
 
         val bgColor = Prefs.getShareBgColor(this)
+        val accentColor = Prefs.getShareAccentColor(this)
         val cardColor = Prefs.getShareCardColor(this)
-        val textColor = Prefs.getShareTextColor(this)
-        val authorColor = Prefs.getShareAuthorColor(this)
-        val schoolColor = Prefs.getShareSchoolColor(this)
-        val brandColor = Prefs.getShareBrandColor(this)
         val dividerColor = Prefs.getShareDividerColor(this)
 
         previewCardContainer.setBackgroundColor(bgColor)
@@ -88,10 +85,10 @@ class PreviewShareActivity : AppCompatActivity() {
             cornerRadius = 44f
             setColor(cardColor)
         }
-        previewQuoteText.setTextColor(textColor)
-        previewAuthor.setTextColor(authorColor)
-        previewSchool.setTextColor(schoolColor)
-        previewBrand.setTextColor(brandColor)
+        previewQuoteText.setTextColor(accentColor)
+        previewAuthor.setTextColor(accentColor)
+        previewSchool.setTextColor(accentColor)
+        previewBrand.setTextColor(accentColor)
         previewDivider.setBackgroundColor(dividerColor)
     }
 

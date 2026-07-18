@@ -62,45 +62,20 @@ class MainActivity : AppCompatActivity() {
     private lateinit var hexBgColor: EditText
     private lateinit var btnPickBgColor: MaterialButton
 
-    private lateinit var previewCardColor: View
-    private lateinit var hexCardColor: EditText
-    private lateinit var btnPickCardColor: MaterialButton
-
-    private lateinit var previewTextColor: View
-    private lateinit var hexTextColor: EditText
-    private lateinit var btnPickTextColor: MaterialButton
-
-    private lateinit var previewAuthorColor: View
-    private lateinit var hexAuthorColor: EditText
-    private lateinit var btnPickAuthorColor: MaterialButton
-
-    private lateinit var previewSchoolColor: View
-    private lateinit var hexSchoolColor: EditText
-    private lateinit var btnPickSchoolColor: MaterialButton
-
-    private lateinit var previewBrandColor: View
-    private lateinit var hexBrandColor: EditText
-    private lateinit var btnPickBrandColor: MaterialButton
-
-    private lateinit var previewDividerColor: View
-    private lateinit var hexDividerColor: EditText
-    private lateinit var btnPickDividerColor: MaterialButton
+    private lateinit var previewAccentColor: View
+    private lateinit var hexAccentColor: EditText
+    private lateinit var btnPickAccentColor: MaterialButton
 
     private lateinit var btnSave: MaterialButton
     private lateinit var btnShow: MaterialButton
     private lateinit var btnShare: MaterialButton
 
-    private var isRefreshingHex = false
-
     private val intervalValues = listOf(15, 30, 60, 120, 360, 720, 1440)
 
     private var selectedBgColor = 0xFF0A2530.toInt()
-    private var selectedCardColor = 0xFF10333E.toInt()
-    private var selectedTextColor = 0xFFDCEFF2.toInt()
-    private var selectedAuthorColor = 0xFFE8F4F6.toInt()
-    private var selectedSchoolColor = 0xFF7FA6AE.toInt()
-    private var selectedBrandColor = 0xFF8FB0B8.toInt()
-    private var selectedDividerColor = 0x26FFFFFF.toInt()
+    private var selectedAccentColor = 0xFF7FA6AE.toInt()
+
+    private var isRefreshingHex = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -173,29 +148,9 @@ class MainActivity : AppCompatActivity() {
         hexBgColor = findViewById(R.id.hex_bg_color)
         btnPickBgColor = findViewById(R.id.btn_pick_bg_color)
 
-        previewCardColor = findViewById(R.id.preview_card_color)
-        hexCardColor = findViewById(R.id.hex_card_color)
-        btnPickCardColor = findViewById(R.id.btn_pick_card_color)
-
-        previewTextColor = findViewById(R.id.preview_text_color)
-        hexTextColor = findViewById(R.id.hex_text_color)
-        btnPickTextColor = findViewById(R.id.btn_pick_text_color)
-
-        previewAuthorColor = findViewById(R.id.preview_author_color)
-        hexAuthorColor = findViewById(R.id.hex_author_color)
-        btnPickAuthorColor = findViewById(R.id.btn_pick_author_color)
-
-        previewSchoolColor = findViewById(R.id.preview_school_color)
-        hexSchoolColor = findViewById(R.id.hex_school_color)
-        btnPickSchoolColor = findViewById(R.id.btn_pick_school_color)
-
-        previewBrandColor = findViewById(R.id.preview_brand_color)
-        hexBrandColor = findViewById(R.id.hex_brand_color)
-        btnPickBrandColor = findViewById(R.id.btn_pick_brand_color)
-
-        previewDividerColor = findViewById(R.id.preview_divider_color)
-        hexDividerColor = findViewById(R.id.hex_divider_color)
-        btnPickDividerColor = findViewById(R.id.btn_pick_divider_color)
+        previewAccentColor = findViewById(R.id.preview_accent_color)
+        hexAccentColor = findViewById(R.id.hex_accent_color)
+        btnPickAccentColor = findViewById(R.id.btn_pick_accent_color)
 
         btnSave = findViewById(R.id.btn_save)
         btnShow = findViewById(R.id.btn_show)
@@ -232,12 +187,7 @@ class MainActivity : AppCompatActivity() {
         cbTimur.isChecked = "Timur" in active
 
         selectedBgColor = Prefs.getShareBgColor(this)
-        selectedCardColor = Prefs.getShareCardColor(this)
-        selectedTextColor = Prefs.getShareTextColor(this)
-        selectedAuthorColor = Prefs.getShareAuthorColor(this)
-        selectedSchoolColor = Prefs.getShareSchoolColor(this)
-        selectedBrandColor = Prefs.getShareBrandColor(this)
-        selectedDividerColor = Prefs.getShareDividerColor(this)
+        selectedAccentColor = Prefs.getShareAccentColor(this)
     }
 
     private fun setupColorPickers() {
@@ -245,28 +195,8 @@ class MainActivity : AppCompatActivity() {
             selectedBgColor = color
             refreshColorPreviews()
         }
-        setupColorButton(btnPickCardColor) { color ->
-            selectedCardColor = color
-            refreshColorPreviews()
-        }
-        setupColorButton(btnPickTextColor) { color ->
-            selectedTextColor = color
-            refreshColorPreviews()
-        }
-        setupColorButton(btnPickAuthorColor) { color ->
-            selectedAuthorColor = color
-            refreshColorPreviews()
-        }
-        setupColorButton(btnPickSchoolColor) { color ->
-            selectedSchoolColor = color
-            refreshColorPreviews()
-        }
-        setupColorButton(btnPickBrandColor) { color ->
-            selectedBrandColor = color
-            refreshColorPreviews()
-        }
-        setupColorButton(btnPickDividerColor) { color ->
-            selectedDividerColor = color
+        setupColorButton(btnPickAccentColor) { color ->
+            selectedAccentColor = color
             refreshColorPreviews()
         }
     }
@@ -275,12 +205,7 @@ class MainActivity : AppCompatActivity() {
         button.setOnClickListener {
             val currentColor = when (button.id) {
                 R.id.btn_pick_bg_color -> selectedBgColor
-                R.id.btn_pick_card_color -> selectedCardColor
-                R.id.btn_pick_text_color -> selectedTextColor
-                R.id.btn_pick_author_color -> selectedAuthorColor
-                R.id.btn_pick_school_color -> selectedSchoolColor
-                R.id.btn_pick_brand_color -> selectedBrandColor
-                R.id.btn_pick_divider_color -> selectedDividerColor
+                R.id.btn_pick_accent_color -> selectedAccentColor
                 else -> Color.WHITE
             }
             showColorPickerDialog(currentColor, onColorSelected)
@@ -365,12 +290,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupHexInputs() {
         setupHexInput(hexBgColor) { color -> selectedBgColor = color; refreshColorPreviews() }
-        setupHexInput(hexCardColor) { color -> selectedCardColor = color; refreshColorPreviews() }
-        setupHexInput(hexTextColor) { color -> selectedTextColor = color; refreshColorPreviews() }
-        setupHexInput(hexAuthorColor) { color -> selectedAuthorColor = color; refreshColorPreviews() }
-        setupHexInput(hexSchoolColor) { color -> selectedSchoolColor = color; refreshColorPreviews() }
-        setupHexInput(hexBrandColor) { color -> selectedBrandColor = color; refreshColorPreviews() }
-        setupHexInput(hexDividerColor) { color -> selectedDividerColor = color; refreshColorPreviews() }
+        setupHexInput(hexAccentColor) { color -> selectedAccentColor = color; refreshColorPreviews() }
     }
 
     private fun setupHexInput(editText: EditText, onColorChanged: (Int) -> Unit) {
@@ -411,34 +331,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun refreshColorPreviews() {
         previewBgColor.setBackgroundColor(selectedBgColor)
-        previewCardColor.setBackgroundColor(selectedCardColor)
-        previewTextColor.setBackgroundColor(selectedTextColor)
-        previewAuthorColor.setBackgroundColor(selectedAuthorColor)
-        previewSchoolColor.setBackgroundColor(selectedSchoolColor)
-        previewBrandColor.setBackgroundColor(selectedBrandColor)
-        previewDividerColor.setBackgroundColor(selectedDividerColor)
+        previewAccentColor.setBackgroundColor(selectedAccentColor)
 
         isRefreshingHex = true
         if (hexBgColor.text.toString() != String.format("%08X", selectedBgColor)) {
             hexBgColor.setText(String.format("%08X", selectedBgColor))
         }
-        if (hexCardColor.text.toString() != String.format("%08X", selectedCardColor)) {
-            hexCardColor.setText(String.format("%08X", selectedCardColor))
-        }
-        if (hexTextColor.text.toString() != String.format("%08X", selectedTextColor)) {
-            hexTextColor.setText(String.format("%08X", selectedTextColor))
-        }
-        if (hexAuthorColor.text.toString() != String.format("%08X", selectedAuthorColor)) {
-            hexAuthorColor.setText(String.format("%08X", selectedAuthorColor))
-        }
-        if (hexSchoolColor.text.toString() != String.format("%08X", selectedSchoolColor)) {
-            hexSchoolColor.setText(String.format("%08X", selectedSchoolColor))
-        }
-        if (hexBrandColor.text.toString() != String.format("%08X", selectedBrandColor)) {
-            hexBrandColor.setText(String.format("%08X", selectedBrandColor))
-        }
-        if (hexDividerColor.text.toString() != String.format("%08X", selectedDividerColor)) {
-            hexDividerColor.setText(String.format("%08X", selectedDividerColor))
+        if (hexAccentColor.text.toString() != String.format("%08X", selectedAccentColor)) {
+            hexAccentColor.setText(String.format("%08X", selectedAccentColor))
         }
         isRefreshingHex = false
     }
@@ -527,12 +427,7 @@ class MainActivity : AppCompatActivity() {
         Prefs.setWidgetAlphaLevel(this, alphaSlider.value.toInt())
 
         Prefs.setShareBgColor(this, selectedBgColor)
-        Prefs.setShareCardColor(this, selectedCardColor)
-        Prefs.setShareTextColor(this, selectedTextColor)
-        Prefs.setShareAuthorColor(this, selectedAuthorColor)
-        Prefs.setShareSchoolColor(this, selectedSchoolColor)
-        Prefs.setShareBrandColor(this, selectedBrandColor)
-        Prefs.setShareDividerColor(this, selectedDividerColor)
+        Prefs.setShareAccentColor(this, selectedAccentColor)
 
         val schools = getSelectedSchools()
         Prefs.setActiveSchools(this, schools)
@@ -612,7 +507,4 @@ class MainActivity : AppCompatActivity() {
         return if (lang == "en") "Background opacity: $pct"
         else "Transparansi latar: $pct"
     }
-
-    private fun dp(value: Int): Int =
-        (value * resources.displayMetrics.density).toInt()
 }
