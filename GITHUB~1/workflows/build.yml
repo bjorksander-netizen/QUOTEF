@@ -26,8 +26,11 @@ jobs:
       - name: Build debug APK
         run: gradle assembleDebug
 
+      - name: Find APK
+        run: find . -name "*.apk" -type f
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: QuoteFilosofis-APK
-          path: QUOTEF~1/app/build/outputs/apk/debug/app-debug.apk
+          path: QUOTEF~1/app/build/outputs/apk/**/*.apk
